@@ -1,0 +1,24 @@
+{
+  "name": "Smokies Trip 2025",
+  "short_name": "Smokies 🏔",
+  "description": "Jessi & Paige's Gatlinburg vacation schedule and budget",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#26215C",
+  "theme_color": "#26215C",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
