@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#26215C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Smokies 🏔">
+<link rel="manifest" href="/smokies-2025/manifest.json">
+<link rel="apple-touch-icon" href="icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<title>Smokies Trip • May 2026</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --purple-light: #EEEDFE; --purple-mid: #534AB7; --purple-dark: #26215C;
+  --coral-light: #FAECE7;  --coral-mid: #D85A30;  --coral-dark: #712B13;
+  --teal-light: #E1F5EE;   --teal-mid: #1D9E75;   --teal-dark: #085041;
+  --blue-light: #D6EEF5;   --blue-mid: #1A7FA8;   --blue-dark: #0A5470;
+  --amber-light: #FAEEDA;  --amber-mid: #BA7517;  --amber-dark: #633806;
+  --gray-bg: #F7F5F0;      --sleep-bg: #2C2C2A;   --sleep-txt: #B4B2A9;
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--gray-bg);
+  overscroll-behavior: none;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--purple-dark);
+  padding: env(safe-area-inset-top, 0) 0 0;
+}
+.hero-inner {
+  padding: 1.5rem 1.25rem 1.25rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-inner::before {
+  content: '';
+  position: absolute; top: -50px; right: -50px;
+  width: 200px; height: 200px; border-radius: 50%;
+  background: rgba(83,74,183,0.3);
+}
+.hero-inner::after {
+  content: '';
+  position: absolute; bottom: -40px; left: -30px;
+  width: 150px; height: 150px; border-radius: 50%;
+  background: rgba(216,90,48,0.2);
+}
+.hero-eyebrow {
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: #AFA9EC; margin-bottom: 0.4rem;
+  position: relative; z-index: 1;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem; font-weight: 700;
+  color: #fff; line-height: 1.15;
+  position: relative; z-index: 1;
+}
+.hero-sub {
+  font-size: 0.82rem; color: #AFA9EC;
+  font-weight: 300; margin-top: 0.3rem;
+  position: relative; z-index: 1;
+}
+
+/* ── TABS ── */
+.tabs {
+  display: flex;
+  background: var(--purple-dark);
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.tab {
+  flex: 1; padding: 0.7rem 0.5rem;
+  font-size: 13px; font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  text-align: center; cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  user-select: none;
+}
+.tab.active { color: #fff; border-bottom-color: var(--coral-mid); }
+
+/* ── PANELS ── */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── SCHEDULE ── */
+.days { padding: 1rem 1rem 5rem; display: flex; flex-direction: column; gap: 0.85rem; }
+
+.day-card { border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.09); }
+
+.day-header {
+  padding: 0.7rem 1rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.day-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: #fff; }
+.day-badge {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.05em;
+  color: rgba(255,255,255,0.75); background: rgba(0,0,0,0.15);
+  padding: 2px 8px; border-radius: 20px;
+}
+
+.event {
+  display: flex; align-items: flex-start;
+  gap: 0.65rem; padding: 0.65rem 1rem;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  text-decoration: none;
+  transition: filter 0.12s;
+}
+.event:first-of-type { border-top: none; }
+.event:active { filter: brightness(0.9); }
+
+.event-time {
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.03em; min-width: 34px;
+  padding-top: 3px; flex-shrink: 0;
+}
+.event-body { flex: 1; }
+.event-title { font-size: 0.88rem; font-weight: 500; line-height: 1.3; }
+.event-detail { font-size: 0.75rem; font-weight: 300; margin-top: 2px; opacity: 0.7; }
+.link-arrow { font-size: 13px; opacity: 0.5; align-self: center; flex-shrink: 0; padding-top: 1px; }
+
+.sleep-block {
+  background: var(--sleep-bg); padding: 0.55rem 1rem;
+  font-size: 0.8rem; color: var(--sleep-txt);
+  font-style: italic; font-weight: 300;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Color themes */
+.sun  .day-header { background: var(--purple-mid); }
+.sun  .event      { background: var(--purple-light); color: var(--purple-dark); }
+.sun  .event-time { color: var(--purple-mid); }
+.sun  .event.hi   { background: var(--purple-mid); color: #fff; }
+.sun  .event.hi .event-time { color: rgba(255,255,255,0.65); }
+
+.dwood .day-header { background: var(--coral-mid); }
+.dwood .event      { background: var(--coral-light); color: var(--coral-dark); }
+.dwood .event-time { color: var(--coral-mid); }
+.dwood .event.hi   { background: var(--coral-mid); color: #fff; }
+.dwood .event.hi .event-time { color: rgba(255,255,255,0.65); }
+.dwood .event.dinner { background: var(--amber-light); color: var(--amber-dark); }
+.dwood .event.dinner .event-time { color: var(--amber-mid); }
+
+.wed  .day-header { background: var(--teal-mid); }
+.wed  .event      { background: var(--teal-light); color: var(--teal-dark); }
+.wed  .event-time { color: var(--teal-mid); }
+.wed  .event.hi   { background: var(--teal-mid); color: #fff; }
+.wed  .event.hi .event-time { color: rgba(255,255,255,0.65); }
+.wed  .event.dinner { background: var(--amber-light); color: var(--amber-dark); }
+.wed  .event.dinner .event-time { color: var(--amber-mid); }
+
+.thu  .day-header { background: var(--blue-mid); }
+.thu  .event      { background: var(--blue-light); color: var(--blue-dark); }
+.thu  .event-time { color: var(--blue-mid); }
+.thu  .event.hi   { background: var(--blue-mid); color: #fff; }
+.thu  .event.hi .event-time { color: rgba(255,255,255,0.65); }
+.thu  .event.dinner { background: var(--amber-light); color: var(--amber-dark); }
+.thu  .event.dinner .event-time { color: var(--amber-mid); }
+
+.fri  .day-header { background: var(--purple-mid); }
+.fri  .event      { background: var(--purple-light); color: var(--purple-dark); }
+.fri  .event-time { color: var(--purple-mid); }
+.fri  .event.hi   { background: var(--purple-mid); color: #fff; }
+.fri  .event.hi .event-time { color: rgba(255,255,255,0.65); }
+
+/* ── BUDGET ── */
+.budget { padding: 1rem 1rem 5rem; display: flex; flex-direction: column; gap: 0.85rem; }
+
+.budget-section { border-radius: 14px; overflow: hidden; box-shadow: 0 1px 6px rgba(0,0,0,0.09); }
+
+.budget-header {
+  padding: 0.65rem 1rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 700; color: #fff;
+}
+
+.budget-row {
+  display: flex; align-items: center;
+  padding: 0.65rem 1rem; gap: 0.75rem;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  text-decoration: none;
+}
+.budget-row:first-of-type { border-top: none; }
+.budget-row:active { filter: brightness(0.93); }
+
+.budget-label { flex: 1; }
+.budget-name { font-size: 0.88rem; font-weight: 500; }
+.budget-note { font-size: 0.75rem; font-weight: 300; opacity: 0.7; margin-top: 1px; }
+.budget-amount { font-size: 0.95rem; font-weight: 500; flex-shrink: 0; min-width: 52px; text-align: right; }
+.budget-free { font-size: 0.88rem; font-weight: 500; color: #3B6D11; }
+
+.budget-subtotal {
+  padding: 0.55rem 1rem;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.8rem; font-weight: 500;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+.total-card {
+  background: var(--purple-dark);
+  border-radius: 14px; padding: 1.1rem 1rem;
+  display: flex; justify-content: space-between; align-items: center;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.09);
+}
+.total-label { font-size: 0.82rem; font-weight: 300; color: #AFA9EC; letter-spacing: 0.05em; text-transform: uppercase; }
+.total-amount { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: #fff; }
+
+.budget-note-footer {
+  font-size: 0.75rem; color: var(--sleep-txt);
+  font-style: italic; font-weight: 300;
+  padding: 0 0.25rem;
+  text-align: center;
+}
+
+/* Attraction section colors */
+.attr .budget-header  { background: var(--blue-mid); }
+.attr .budget-row     { background: var(--blue-light); color: var(--blue-dark); }
+.attr .budget-amount  { color: var(--blue-mid); }
+.attr .budget-subtotal { background: #BFE0EF; color: var(--blue-dark); }
+
+.food .budget-header  { background: #993556; }
+.food .budget-row     { background: #FBEAF0; color: #4B1528; }
+.food .budget-amount  { color: #993556; }
+.food .budget-subtotal { background: #F4C0D1; color: #4B1528; }
+
+.fuel .budget-header  { background: #5F5E5A; }
+.fuel .budget-row     { background: var(--gray-bg); color: #2C2C2A; }
+.fuel .budget-amount  { color: #444441; }
+.fuel .budget-subtotal { background: #D3D1C7; color: #2C2C2A; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">May 17 – 22, 2026</div>
+    <h1>Smokies Trip 🏔</h1>
+    <div class="hero-sub">Jessi & Paige • Gatlinburg, TN</div>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('schedule')">Schedule</div>
+    <div class="tab" onclick="switchTab('budget')">Budget</div>
+  </div>
+</div>
+
+<!-- ══════════ SCHEDULE PANEL ══════════ -->
+<div id="schedule" class="panel active">
+<div class="days">
+
+  <!-- SUN -->
+  <div class="day-card sun">
+    <div class="day-header">
+      <div class="day-name">Sunday</div>
+      <div class="day-badge">May 17 • Travel Day</div>
+    </div>
+    <div class="event"><div class="event-time">0600</div><div class="event-body"><div class="event-title">Leave Home</div></div></div>
+    <div class="event"><div class="event-time">0730–</div><div class="event-body"><div class="event-title">Driving</div></div></div>
+    <a class="event hi" href="https://locations.thecheesecakefactory.com/tn/nashville-98.html?utm_source=Google&utm_medium=Maps&utm_campaign=Google+Places" target="_blank">
+      <div class="event-time">1200</div>
+      <div class="event-body"><div class="event-title">Lunch @ Cheesecake Factory</div><div class="event-detail">Nashville stop</div></div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <div class="event"><div class="event-time">1300–</div><div class="event-body"><div class="event-title">Driving</div></div></div>
+    <a class="event hi" href="https://www.elkspringsresort.com/cabins/a-kiss-on-the-creek/" target="_blank">
+      <div class="event-time">1800</div>
+      <div class="event-body"><div class="event-title">Arrive @ Cabin</div><div class="event-detail">Unpack, grocery run — A Kiss on the Creek</div></div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <div class="event"><div class="event-time">2000+</div><div class="event-body"><div class="event-title">Settle in for the week ✨</div></div></div>
+  </div>
+
+  <!-- MON -->
+  <div class="day-card dwood">
+    <div class="day-header">
+      <div class="day-name">Monday</div>
+      <div class="day-badge">May 18 • Dollywood Day 1</div>
+    </div>
+    <div class="event"><div class="event-time">0600</div><div class="event-body"><div class="event-title">Wake up / Brekkie</div></div></div>
+    <div class="event hi"><div class="event-time">0800</div><div class="event-body"><div class="event-title">Leave for Dollywood</div></div></div>
+    <a class="event hi" href="https://www.dollywood.com/deals/special-offers/military-discount/" target="_blank">
+      <div class="event-time">0900–</div>
+      <div class="event-body"><div class="event-title">DOLLYWOOD! 🎢</div><div class="event-detail">Lunch choice @ Dollywood • Military discount tickets</div></div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <div class="event dinner"><div class="event-time">1800</div><div class="event-body"><div class="event-title">Dinner @ Cabin</div></div></div>
+    <div class="event"><div class="event-time">2000+</div><div class="event-body"><div class="event-title">Relax @ Cabin</div></div></div>
+  </div>
+
+  <!-- TUE -->
+  <div class="day-card dwood">
+    <div class="day-header">
+      <div class="day-name">Tuesday</div>
+      <div class="day-badge">May 19 • Dollywood Day 2</div>
+    </div>
+    <div class="event"><div class="event-time">0600</div><div class="event-body"><div class="event-title">Wake up / Brekkie</div></div></div>
+    <div class="event hi"><div class="event-time">0800</div><div class="event-body"><div class="event-title">Leave for Dollywood</div></div></div>
+    <a class="event hi" href="https://www.dollywood.com/deals/special-offers/military-discount/" target="_blank">
+      <div class="event-time">0900–</div>
+      <div class="event-body"><div class="event-title">DOLLYWOOD! 🎢</div><div class="event-detail">Lunch choice @ Dollywood • Military discount tickets</div></div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <div class="event dinner"><div class="event-time">1800</div><div class="event-body"><div class="event-title">Dinner @ Cabin</div></div></div>
+    <div class="event"><div class="event-time">2000+</div><div class="event-body"><div class="event-title">Relax @ Cabin</div></div></div>
+  </div>
+
+  <!-- WED -->
+  <div class="day-card wed">
+    <div class="day-header">
+      <div class="day-name">Wednesday</div>
+      <div class="day-badge">May 20 • Horse Riding Day</div>
+    </div>
+    <div class="sleep-block">💤 Sleep in</div>
+    <div class="event"><div class="event-time">1000</div><div class="event-body"><div class="event-title">Wake up / Brekkie</div></div></div>
+    <div class="event hi"><div class="event-time">1200</div><div class="event-body"><div class="event-title">Leave for HB Riding</div></div></div>
+    <a class="event hi" href="https://horseridingbigrock.com/index.php" target="_blank">
+      <div class="event-time">1300</div>
+      <div class="event-body"><div class="event-title">HB Riding @ Big Rock Dude Ranch 🐴</div><div class="event-detail">Special #1 — includes food for petting zoo</div></div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <div class="event"><div class="event-time">1400</div><div class="event-body"><div class="event-title">Food out — wherever our ❤️ desires</div></div></div>
+    <div class="event"><div class="event-time">1500</div><div class="event-body"><div class="event-title">Shopping @ Gatlinburg / Pigeon Forge</div></div></div>
+    <a class="event dinner" href="https://splitraileats.com/" target="_blank">
+      <div class="event-time">1800</div>
+      <div class="event-body"><div class="event-title">Dinner @ Split Rail Eats 🍽</div></div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <div class="event"><div class="event-time">2000+</div><div class="event-body"><div class="event-title">Relax @ Cabin</div></div></div>
+  </div>
+
+  <!-- THU -->
+  <div class="day-card thu">
+    <div class="day-header">
+      <div class="day-name">Thursday</div>
+      <div class="day-badge">May 21 • Hike + Anakeesta</div>
+    </div>
+    <div class="event"><div class="event-time">0600</div><div class="event-body"><div class="event-title">Wake up / Brekkie</div></div></div>
+    <div class="event hi"><div class="event-time">0730</div><div class="event-body"><div class="event-title">Leave for Laurel Falls</div></div></div>
+    <a class="event hi" href="https://www.nps.gov/thingstodo/hike-to-laurel-falls.htm" target="_blank">
+      <div class="event-time">0815</div>
+      <div class="event-body"><div class="event-title">Hiking Laurel Falls! 🌿</div><div class="event-detail">Free — National Park trail</div></div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <div class="event"><div class="event-time">1000</div><div class="event-body"><div class="event-title">Leave Laurel Falls</div></div></div>
+    <a class="event hi" href="https://anakeesta.com/" target="_blank">
+      <div class="event-time">1200–</div>
+      <div class="event-body"><div class="event-title">Anakeesta! 🚡</div><div class="event-detail">Lunch choice @ Anakeesta</div></div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <a class="event dinner" href="https://peddlergatlinburg.com/" target="_blank">
+      <div class="event-time">1800</div>
+      <div class="event-body"><div class="event-title">Dinner @ The Peddler 🥩</div></div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <div class="event"><div class="event-time">2000+</div><div class="event-body"><div class="event-title">Pack up / Relax @ Cabin</div></div></div>
+  </div>
+
+  <!-- FRI -->
+  <div class="day-card fri">
+    <div class="day-header">
+      <div class="day-name">Friday</div>
+      <div class="day-badge">May 22 • Drive Home</div>
+    </div>
+    <div class="sleep-block">💤 Sleep in (a little)</div>
+    <div class="event"><div class="event-time">0800</div><div class="event-body"><div class="event-title">Wake up / Brekkie</div></div></div>
+    <div class="event"><div class="event-time">0900</div><div class="event-body"><div class="event-title">Finish packing</div></div></div>
+    <div class="event hi"><div class="event-time">1000</div><div class="event-body"><div class="event-title">Check out Vrbo</div></div></div>
+    <a class="event hi" href="https://buc-ees.com/locations/" target="_blank">
+      <div class="event-time">1030</div>
+      <div class="event-body"><div class="event-title">Brekki out @ Buccee's 🦫</div></div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <div class="event"><div class="event-time">1200–</div><div class="event-body"><div class="event-title">Driving</div></div></div>
+    <div class="event hi"><div class="event-time">1300</div><div class="event-body"><div class="event-title">Nashville</div></div></div>
+    <div class="event"><div class="event-time">1400–</div><div class="event-body"><div class="event-title">Driving</div></div></div>
+    <div class="event hi"><div class="event-time">2200</div><div class="event-body"><div class="event-title">Home ❤️</div></div></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════ BUDGET PANEL ══════════ -->
+<div id="budget" class="panel">
+<div class="budget">
+
+  <!-- ATTRACTIONS -->
+  <div class="budget-section attr">
+    <div class="budget-header">Attractions</div>
+    <div class="budget-row">
+      <div class="budget-label"><div class="budget-name">Laurel Falls</div><div class="budget-note">National Park — no tickets needed</div></div>
+      <div class="budget-free">Free</div>
+    </div>
+    <a class="budget-row" href="https://anakeesta.com/pricing/" target="_blank">
+      <div class="budget-label"><div class="budget-name">Anakeesta 🚡</div><div class="budget-note">$35/person × 2 — tap to buy</div></div>
+      <div class="budget-amount">$70</div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <a class="budget-row" href="https://www.dollywood.com/deals/special-offers/military-discount/" target="_blank">
+      <div class="budget-label"><div class="budget-name">Dollywood 🎢</div><div class="budget-note">Jessi $100 (military) + Paige $130 — tap to buy</div></div>
+      <div class="budget-amount">$230</div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <a class="budget-row" href="https://horseridingbigrock.com/Rates.php" target="_blank">
+      <div class="budget-label"><div class="budget-name">Big Rock Dude Ranch 🐴</div><div class="budget-note">Special #1 — $60/person × 2 — tap for rates</div></div>
+      <div class="budget-amount">$120</div>
+      <div class="link-arrow">↗</div>
+    </a>
+    <div class="budget-subtotal"><span>Attractions subtotal</span><span>$420</span></div>
+  </div>
+
+  <!-- FOOD -->
+  <div class="budget-section food">
+    <div class="budget-header">Food & Dining</div>
+    <div class="budget-row"><div class="budget-label"><div class="budget-name">Cheesecake Factory</div><div class="budget-note">Nashville stop — Sun drive</div></div><div class="budget-amount">~$60</div></div>
+    <div class="budget-row"><div class="budget-label"><div class="budget-name">Dinners @ Cabin</div><div class="budget-note">Groceries / cooking in</div></div><div class="budget-amount">~$80</div></div>
+    <div class="budget-row"><div class="budget-label"><div class="budget-name">Split Rail Eats</div><div class="budget-note">Wed dinner, Gatlinburg</div></div><div class="budget-amount">~$70</div></div>
+    <div class="budget-row"><div class="budget-label"><div class="budget-name">The Peddler</div><div class="budget-note">Thu — nicer sit-down</div></div><div class="budget-amount">~$100</div></div>
+    <div class="budget-row"><div class="budget-label"><div class="budget-name">Buccee's + road snacks</div><div class="budget-note">Treats, Dollywood snacks, misc</div></div><div class="budget-amount">~$90</div></div>
+    <div class="budget-row"><div class="budget-label"><div class="budget-name">Lunches & misc meals</div><div class="budget-note">Anakeesta, Dollywood, misc days</div></div><div class="budget-amount">~$150</div></div>
+    <div class="budget-subtotal"><span>Food subtotal</span><span>~$550</span></div>
+  </div>
+
+  <!-- FUEL -->
+  <div class="budget-section fuel">
+    <div class="budget-header">Fuel</div>
+    <div class="budget-row">
+      <div class="budget-label">
+        <div class="budget-name">Gas — Round Trip</div>
+        <div class="budget-note">1,138 mi ÷ 19 mpg ≈ 60 gal × $4</div>
+      </div>
+      <div class="budget-amount">~$240</div>
+    </div>
+    <div class="budget-subtotal"><span>Fuel subtotal</span><span>~$240</span></div>
+  </div>
+
+  <!-- TOTAL -->
+  <div class="total-card">
+    <div>
+      <div class="total-label">Estimated Total</div>
+      <div style="font-size:0.75rem; color:#AFA9EC; font-weight:300; margin-top:2px;">Cabin/Vrbo not included</div>
+    </div>
+    <div class="total-amount">$1,210</div>
+  </div>
+
+  <div class="budget-note-footer">All food amounts are estimates — actual costs may vary.</div>
+
+</div>
+</div>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    t.classList.toggle('active', (i===0&&name==='schedule')||(i===1&&name==='budget'));
+  });
+  document.querySelectorAll('.panel').forEach(p => {
+    p.classList.toggle('active', p.id === name);
+  });
+  window.scrollTo(0, 0);
+}
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register("/smokies-2025/sw.js");
+}
+</script>
+</body>
+</html>
